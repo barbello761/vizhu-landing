@@ -1,0 +1,162 @@
+@use 'modern-normalize/modern-normalize.css';
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:root {
+  --bg: #{$color-surface};
+  --bg-muted: #{$color-surface-muted};
+  --ink: #{$color-ink-900};
+  --ink-muted: #{$color-ink-500};
+  --brand: #{$color-brand-600};
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+
+  @include reduce-motion {
+    scroll-behavior: auto;
+  }
+
+  // Sub-section snap, both directions.
+  //
+  // `proximity` (not `mandatory`) is intentional — mandatory pulls the
+  // viewport back to the nearest snap point even mid-gesture, which
+  // traps the user at the section start when they try to scroll back
+  // inside a tall section. Proximity only catches when momentum
+  // naturally comes to rest near an anchor, in either direction.
+  //
+  // Anchors are placed both on each `<section>` start and on logical
+  // sub-blocks inside tall sections (via `.snap-target`), so a small
+  // wheel up/down always finds a close landing spot.
+  @media (min-width: $bp-md) and (prefers-reduced-motion: no-preference) {
+    scroll-snap-type: y proximity;
+  }
+}
+
+// Snap targets only carry `scroll-snap-align`. The 80px breathing room
+// under the sticky header is handled once by `scroll-padding-top` on
+// `html` — do not also add `scroll-margin-top` here, or both offsets
+// stack and the previous section's tail leaks into the viewport.
+main > section {
+  @media (min-width: $bp-md) and (prefers-reduced-motion: no-preference) {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+// Sub-section snap anchors — apply to logical sub-blocks inside tall
+// sections so backward scroll has fine-grained landing points instead
+// of always returning to the section's top.
+.snap-target {
+  @media (min-width: $bp-md) and (prefers-reduced-motion: no-preference) {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: $font-sans;
+  font-size: $fs-body;
+  line-height: $lh-base;
+  color: $color-ink-900;
+  background: $color-surface;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
+  text-rendering: optimizeLegibility;
+}
+
+// Media reset in :where() — zero specificity so any explicit width/height
+// on an element (via inline style, attribute, or component CSS) wins.
+:where(img, svg, video) {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Wrapped in :where() so the rule has zero specificity. That way ANY
+// class on a link (.btn, .skip-link, etc.) wins on color/text-decoration
+// — fixes blue link colour bleeding into button labels.
+:where(a) {
+  color: $color-brand-600;
+  text-decoration: none;
+  text-underline-offset: 3px;
+  transition: color $dur-fast $ease-out;
+}
+
+:where(a):hover {
+  text-decoration: underline;
+}
+
+a {
+  @include focus-ring;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: $fw-bold;
+  line-height: $lh-tight;
+  letter-spacing: -0.02em;
+  color: $color-ink-900;
+}
+
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+::selection {
+  background: $color-brand-200;
+  color: $color-ink-900;
+}
+
+// Skip link — first focusable element for AT users.
+.skip-link {
+  position: absolute;
+  top: $space-3;
+  left: $space-3;
+  z-index: $z-skip;
+  padding: $space-3 $space-5;
+  background: $color-ink-900;
+  color: $color-surface;
+  border-radius: $radius-md;
+  font-weight: $fw-semi;
+  transform: translateY(-200%);
+  transition: transform $dur-base $ease-out;
+
+  &:focus,
+  &:focus-visible {
+    transform: translateY(0);
+    outline: $focus-ring-width solid $focus-ring-color;
+    outline-offset: 2px;
+  }
+}
+
+// High-contrast mode preference.
+@media (prefers-contrast: more) {
+  body { color: #000; }
+  a    { text-decoration: underline; }
+}

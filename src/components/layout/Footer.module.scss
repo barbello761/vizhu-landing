@@ -1,0 +1,123 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.footer {
+  background: $color-navy-900;
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: $space-11;
+  padding-block: $space-10 $space-7;
+  background-image:
+    radial-gradient(60% 50% at 80% 0%, rgba(43, 77, 255, 0.35), transparent 70%),
+    radial-gradient(60% 50% at 0% 100%, rgba(43, 77, 255, 0.15), transparent 70%);
+}
+
+.inner {
+  @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-9;
+
+  @include up($bp-md) {
+    grid-template-columns: 1.2fr 2fr;
+    gap: $space-10;
+  }
+}
+
+.brandBlock {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 380px;
+}
+
+.brand {
+  display: inline-flex;
+  border-radius: $radius-md;
+  padding: 4px;
+  margin: -4px;
+  @include focus-ring;
+}
+
+.tagline {
+  font-size: 0.95rem;
+  line-height: $lh-base;
+}
+
+.social {
+  display: flex;
+  gap: $space-3;
+
+  a {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    color: #fff;
+    transition: background-color $dur-fast $ease-out, transform $dur-fast $ease-out;
+
+    &:hover {
+      background: $color-brand-600;
+      text-decoration: none;
+      @include allow-motion {
+        transform: translateY(-2px);
+      }
+    }
+    @include focus-ring;
+  }
+}
+
+.linkColumns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-7;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.colTitle {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: $fw-semi;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.col ul {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.col a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  transition: color $dur-fast $ease-out;
+  border-radius: $radius-sm;
+
+  &:hover { color: #fff; text-decoration: none; }
+  @include focus-ring;
+}
+
+.legal {
+  @include container;
+  margin-top: $space-9;
+  padding-top: $space-6;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3 $space-6;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,166 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface-muted;
+  position: relative;
+}
+
+.inner {
+  @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-9;
+  align-items: start;
+
+  @include up($bp-lg) {
+    grid-template-columns: 1.05fr 1fr;
+    gap: $space-10;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 600px;
+
+  h2 {
+    font-size: $fs-h1;
+    color: $color-ink-900;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-100;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.body {
+  font-size: $fs-body-lg;
+  color: $color-ink-500;
+  line-height: $lh-base;
+
+  strong {
+    color: $color-ink-900;
+    font-weight: $fw-semi;
+  }
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-top: $space-4;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    font-size: 1rem;
+    color: $color-ink-700;
+  }
+}
+
+.check {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  background: $color-brand-600;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: $fw-bold;
+  margin-top: 2px;
+}
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.pillar {
+  display: flex;
+
+  > div {
+    position: relative;
+    padding: $space-7;
+    border-radius: $radius-xl;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    transition: transform $dur-base $ease-out, box-shadow $dur-base $ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    width: 100%;
+
+    &:hover {
+      box-shadow: $shadow-md;
+      @include allow-motion {
+        transform: translateX(4px);
+      }
+    }
+
+    &[data-i='0'] {
+      background: $color-brand-600;
+      color: #fff;
+      border-color: transparent;
+
+      h3 { color: #fff; }
+      p  { color: rgba(255, 255, 255, 0.85); }
+
+      .pillarBadge {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+    }
+
+    &[data-i='1'] {
+      background: $color-ink-900;
+      color: #fff;
+      border-color: transparent;
+      h3 { color: #fff; }
+      p  { color: rgba(255, 255, 255, 0.8); }
+
+      .pillarBadge {
+        background: rgba(255, 255, 255, 0.16);
+        color: $color-accent-yellow;
+      }
+    }
+  }
+
+  h3 {
+    font-size: $fs-h3;
+    color: $color-ink-900;
+  }
+
+  p {
+    color: $color-ink-500;
+    font-size: 1rem;
+    line-height: $lh-base;
+  }
+}
+
+.pillarBadge {
+  align-self: flex-start;
+  font-size: 0.78rem;
+  font-weight: $fw-semi;
+  padding: 4px 10px;
+  border-radius: $radius-pill;
+  background: $color-brand-050;
+  color: $color-brand-600;
+}

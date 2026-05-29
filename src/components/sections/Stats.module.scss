@@ -1,0 +1,276 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  max-width: 760px;
+
+  h2 { font-size: $fs-h1; }
+  p  { color: $color-ink-500; font-size: $fs-body-lg; }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// =========== Big numbers ===========
+// 1 column < 560px (cards stay readable on phones), then 2 cols, then 4.
+.bigNumbers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-3;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-4;
+  }
+  @include up($bp-md) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-5;
+  }
+}
+
+.bigCard {
+  display: flex;
+}
+
+.bigCardInner {
+  width: 100%;
+  background: $color-surface-muted;
+  border-radius: $radius-xl;
+  padding: $space-7 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  border: 1px solid $color-border;
+  transition:
+    background-color $dur-base $ease-out,
+    color $dur-base $ease-out,
+    box-shadow $dur-base $ease-out,
+    transform $dur-base $ease-out;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    @include allow-motion {
+      transform: translateY(-3px);
+    }
+  }
+
+  strong {
+    font-size: $fs-stat;
+    font-weight: $fw-black;
+    color: $color-brand-600;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-feature-settings: 'tnum';
+  }
+
+  > span {
+    font-size: 0.95rem;
+    color: $color-ink-500;
+  }
+
+  &[data-accent] {
+    background: $color-brand-600;
+    border-color: transparent;
+
+    strong { color: $color-accent-yellow; }
+    > span { color: rgba(255, 255, 255, 0.85); }
+
+    .source { color: rgba(255, 255, 255, 0.5); }
+  }
+}
+
+.source {
+  font-size: 0.72rem;
+  color: $color-ink-400;
+  letter-spacing: 0.02em;
+  margin-top: $space-2;
+  padding-top: $space-2;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+// =========== Split ===========
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-7;
+
+  @include up($bp-lg) {
+    grid-template-columns: 1.2fr 1fr;
+    gap: $space-8;
+  }
+}
+
+// Causes
+.causes {
+  background: $color-surface-muted;
+  border-radius: $radius-2xl;
+  padding: $space-7;
+  border: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  h3 {
+    font-size: $fs-h3;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 12px;
+    align-items: center;
+  }
+}
+
+.causeHead {
+  display: contents;
+
+  span {
+    font-size: 0.95rem;
+    color: $color-ink-700;
+    grid-column: 1;
+  }
+
+  strong {
+    font-size: 0.95rem;
+    color: $color-ink-900;
+    font-weight: $fw-bold;
+    grid-column: 2;
+    font-feature-settings: 'tnum';
+  }
+}
+
+.bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: $color-border;
+  border-radius: $radius-pill;
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, $color-brand-500, $color-brand-300);
+    border-radius: $radius-pill;
+    transition: width $dur-slow $ease-out;
+  }
+}
+
+.causePct {
+  grid-column: 2;
+  font-size: 0.78rem;
+  color: $color-ink-400;
+  font-weight: $fw-medium;
+}
+
+.causesNote {
+  font-size: 0.8rem;
+  color: $color-ink-400;
+}
+
+// Audience
+.audience {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  h3 {
+    font-size: $fs-h3;
+  }
+}
+
+.audList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.audItem {
+  display: flex;
+
+  > div {
+    width: 100%;
+    border-radius: $radius-xl;
+    padding: $space-6;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    transition: box-shadow $dur-base $ease-out, transform $dur-base $ease-out;
+
+    &:hover {
+      box-shadow: $shadow-md;
+      @include allow-motion {
+        transform: translateX(4px);
+      }
+    }
+
+    &[data-type='main'] {
+      background: $color-ink-900;
+      border-color: transparent;
+      color: #fff;
+      h4 { color: #fff; }
+      p  { color: rgba(255, 255, 255, 0.78); }
+      .tag {
+        background: rgba(255, 255, 255, 0.18);
+        color: $color-accent-yellow;
+      }
+    }
+  }
+
+  h4 {
+    font-size: 1.15rem;
+    font-weight: $fw-bold;
+    color: $color-ink-900;
+  }
+
+  p {
+    color: $color-ink-500;
+    font-size: 0.95rem;
+    line-height: $lh-base;
+  }
+}
+
+.tag {
+  align-self: flex-start;
+  padding: 4px 10px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.75rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}

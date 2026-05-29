@@ -1,0 +1,118 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+// ============== Breakpoints ==============
+// Mobile-first: @include up($bp-md) targets >=768px.
+
+@mixin up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin down($bp) {
+  @media (max-width: ($bp - 0.02px)) {
+    @content;
+  }
+}
+
+@mixin between($from, $to) {
+  @media (min-width: $from) and (max-width: ($to - 0.02px)) {
+    @content;
+  }
+}
+
+// ============== Reduced motion ==============
+
+@mixin reduce-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin allow-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+// ============== Focus rings ==============
+// :focus-visible keeps the ring off for mouse-only users
+// but always shows it for keyboard users — non-negotiable for a11y.
+
+@mixin focus-ring($color: $focus-ring-color, $offset: $focus-ring-offset) {
+  &:focus-visible {
+    outline: $focus-ring-width solid $color;
+    outline-offset: $offset;
+    border-radius: $radius-md;
+  }
+}
+
+@mixin focus-ring-inset($color: $focus-ring-color) {
+  &:focus-visible {
+    outline: $focus-ring-width solid $color;
+    outline-offset: -$focus-ring-width;
+  }
+}
+
+// ============== Container ==============
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-pad-mobile;
+
+  @include up($bp-md) {
+    padding-inline: $container-pad-tablet;
+  }
+  @include up($bp-lg) {
+    padding-inline: $container-pad-desktop;
+  }
+}
+
+// ============== Section spacing ==============
+
+@mixin section-padding {
+  padding-block: $space-9;
+
+  @include up($bp-md) {
+    padding-block: $space-10;
+  }
+  @include up($bp-lg) {
+    padding-block: $space-11;
+  }
+}
+
+// ============== Visually hidden ==============
+// Hides visually but keeps in the AT tree.
+
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ============== Card ==============
+
+@mixin card($padding: $space-7) {
+  background: $color-surface;
+  border-radius: $radius-xl;
+  padding: $padding;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-sm;
+}
+
+// ============== Grid helpers ==============
+
+@mixin grid-auto($min: 280px, $gap: $space-6) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+  gap: $gap;
+}

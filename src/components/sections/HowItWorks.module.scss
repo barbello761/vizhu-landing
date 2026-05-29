@@ -1,0 +1,114 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background:
+    radial-gradient(60% 60% at 50% 0%, $color-brand-050 0%, transparent 60%),
+    $color-surface;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+}
+
+.header {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  h2 { font-size: $fs-h1; }
+  p  { color: $color-ink-500; font-size: $fs-body-lg; }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-100;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-7;
+  align-items: center;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-9;
+  }
+
+  @include up($bp-md) {
+    &[data-i='1'] .visual,
+    &[data-i='3'] .visual {
+      order: -1;
+    }
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  max-width: 500px;
+
+  h3 {
+    font-size: $fs-h2;
+    color: $color-ink-900;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    color: $color-ink-500;
+    font-size: $fs-body-lg;
+    line-height: $lh-base;
+  }
+}
+
+.number {
+  font-size: 0.95rem;
+  font-weight: $fw-black;
+  color: $color-brand-600;
+  letter-spacing: 0.15em;
+  margin-bottom: $space-2;
+  font-feature-settings: 'tnum';
+}
+
+.visual {
+  display: flex;
+  justify-content: center;
+  padding: $space-5;
+  border-radius: $radius-2xl;
+  background: linear-gradient(160deg, $color-brand-050 0%, $color-surface-soft 100%);
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+  align-items: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(43, 77, 255, 0.25), transparent 70%);
+    bottom: -40px;
+    right: -40px;
+    pointer-events: none;
+  }
+}

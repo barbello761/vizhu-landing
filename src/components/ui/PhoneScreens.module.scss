@@ -1,0 +1,342 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// All screens are decorative renderings; sizes are fluid
+// to the parent (the PhoneMockup screen area).
+
+// ---------- shared base ----------
+%screenBase {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 14px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #fff;
+  margin-top: 18px; // below status bar
+}
+
+// =============== Home ================
+.home {
+  @extend %screenBase;
+  background: $color-brand-600;
+  gap: 10px;
+}
+
+.appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.heroCard {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  padding: 14px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.heroTitle {
+  font-size: 18px;
+  font-weight: $fw-bold;
+  line-height: 1.1;
+}
+
+.micButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: $color-brand-600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.heroHint {
+  font-size: 9px;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: $fw-semi;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.quickCard {
+  background: rgba(255, 255, 255, 0.92);
+  color: $color-brand-700;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: $fw-semi;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+
+  span {
+    font-size: 13px;
+  }
+}
+
+.tabBar {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.95);
+  color: $color-ink-700;
+  border-radius: 14px;
+  padding: 6px 4px;
+  font-size: 9px;
+  font-weight: $fw-medium;
+
+  span {
+    text-align: center;
+    padding: 4px 2px;
+    border-radius: 8px;
+
+    &[data-active='true'] {
+      background: $color-brand-050;
+      color: $color-brand-600;
+      font-weight: $fw-semi;
+    }
+  }
+}
+
+// =============== Camera ================
+.camera {
+  @extend %screenBase;
+  background: #0a0e1c;
+  padding: 0;
+  margin-top: 0;
+}
+
+.cameraFeed {
+  flex: 1;
+  background:
+    radial-gradient(60% 80% at 30% 30%, rgba(255, 220, 180, 0.15), transparent 70%),
+    radial-gradient(80% 80% at 70% 70%, rgba(80, 120, 200, 0.18), transparent 70%),
+    linear-gradient(180deg, #1a1f2e 0%, #0a0e1c 100%);
+  position: relative;
+  padding: 30px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cameraTag {
+  position: absolute;
+  top: 30px;
+  left: 14px;
+  font-size: 9px;
+  font-weight: $fw-semi;
+  color: $color-brand-300;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.cameraDialog {
+  background: rgba(255, 255, 255, 0.95);
+  color: $color-ink-900;
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.cameraControls {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px 14px 22px;
+  background: #050a18;
+}
+
+.controlBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #fff;
+  border: none;
+
+  &[data-kind='close'] { background: #d63a3a; }
+  &[data-kind='mic']   { background: $color-brand-600; }
+  &[data-kind='chat']  { background: $color-brand-400; }
+}
+
+// =============== Chat ================
+.chat {
+  @extend %screenBase;
+  background: #fff;
+  color: $color-ink-900;
+  gap: 6px;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: $fw-semi;
+  font-size: 13px;
+  color: $color-ink-900;
+  padding-bottom: 4px;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 4px;
+
+  span:nth-child(3) {
+    color: $color-brand-600;
+  }
+}
+
+.chatBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 10px;
+  line-height: 1.4;
+  overflow: hidden;
+}
+
+.bubbleSelf {
+  background: $color-brand-050;
+  color: $color-ink-900;
+  border-radius: 12px 12px 12px 4px;
+  padding: 8px 10px;
+  align-self: flex-start;
+  max-width: 88%;
+}
+
+.bubbleAI {
+  background: $color-brand-600;
+  color: #fff;
+  border-radius: 12px 12px 4px 12px;
+  padding: 8px 10px;
+  align-self: flex-end;
+  max-width: 75%;
+}
+
+// =============== Volunteer ================
+.volunteer {
+  @extend %screenBase;
+  background: #fff;
+  color: $color-ink-900;
+}
+
+.volHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: $fw-semi;
+  font-size: 13px;
+
+  span:nth-child(3) { color: $color-brand-600; }
+}
+
+.volTimer {
+  text-align: center;
+  font-size: 32px;
+  font-weight: $fw-bold;
+  margin-top: 14px;
+  font-feature-settings: 'tnum';
+  color: $color-brand-600;
+}
+
+.volSub {
+  text-align: center;
+  font-size: 10px;
+  color: $color-ink-500;
+  margin-bottom: 14px;
+}
+
+.volPulse {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 8px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulseRing {
+  position: absolute;
+  inset: 0;
+  border: 2px solid $color-brand-300;
+  border-radius: 50%;
+  opacity: 0.5;
+
+  @include allow-motion {
+    animation: pulse 2s $ease-out infinite;
+    &[data-delay='1'] { animation-delay: 1s; }
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.7); opacity: 0.7; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.callBtn {
+  width: 60px;
+  height: 60px;
+  background: $color-brand-600;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 24px rgba(43, 77, 255, 0.4);
+}
+
+.volWhat {
+  font-size: 10px;
+  background: $color-surface-muted;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: auto;
+
+  span { font-weight: $fw-semi; display: block; margin-bottom: 4px; }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: $color-ink-500;
+  }
+  li::before {
+    content: '✓ ';
+    color: $color-success;
+  }
+}
+
+.cancelBtn {
+  margin-top: 10px;
+  background: $color-danger;
+  color: #fff;
+  font-size: 11px;
+  padding: 10px;
+  border-radius: 999px;
+  font-weight: $fw-semi;
+}

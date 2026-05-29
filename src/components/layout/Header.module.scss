@@ -1,0 +1,189 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  transition:
+    background-color $dur-base $ease-out,
+    box-shadow $dur-base $ease-out,
+    border-color $dur-base $ease-out;
+  border-bottom: 1px solid transparent;
+
+  &[data-scrolled] {
+    background: rgba(255, 255, 255, 0.88);
+    border-bottom-color: $color-border;
+    box-shadow: 0 4px 24px rgba(8, 16, 42, 0.06);
+  }
+}
+
+.inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-5;
+  padding-block: $space-4;
+
+  @include up($bp-md) {
+    padding-block: $space-5;
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  border-radius: $radius-md;
+  padding: 4px;
+  margin: -4px;
+  @include focus-ring;
+
+  // Responsive logo height — overrides Logo's `size` prop default.
+  // Phone: compact so the wordmark doesn't crowd the burger.
+  // Tablet: medium. Desktop: full presence (matches the new 64px feel).
+  --logo-h: 36px;
+
+  @include up($bp-sm) {
+    --logo-h: 44px;
+  }
+  @include up($bp-md) {
+    --logo-h: 52px;
+  }
+  @include up($bp-lg) {
+    --logo-h: 64px;
+  }
+}
+
+.nav {
+  display: none;
+
+  @include up($bp-lg) {
+    display: block;
+  }
+
+  ul {
+    display: flex;
+    gap: $space-7;
+  }
+
+  a {
+    color: $color-ink-700;
+    font-weight: $fw-medium;
+    font-size: 0.95rem;
+    padding: $space-2 $space-1;
+    border-radius: $radius-sm;
+    transition: color $dur-fast $ease-out;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-brand-600;
+      text-decoration: none;
+    }
+    @include focus-ring;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  a{
+    color: #fff;
+  }
+  
+
+  > :first-child {
+    display: none;
+
+    @include up($bp-sm) {
+      display: inline-flex;
+    }
+  }
+}
+
+// ====== Burger ======
+.burger {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: $radius-md;
+  background: $color-surface-soft;
+  @include focus-ring;
+
+  @include up($bp-lg) {
+    display: none;
+  }
+
+  span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: $color-ink-900;
+    border-radius: 2px;
+    transition: transform $dur-base $ease-out, opacity $dur-fast $ease-out;
+  }
+
+  span[data-open]:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  span[data-open]:nth-child(2) { opacity: 0; }
+  span[data-open]:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+// ====== Mobile sheet ======
+.mobileSheet {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: $space-6 $space-5 $space-9;
+  border-top: 1px solid $color-border;
+  box-shadow: $shadow-lg;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform $dur-base $ease-out, opacity $dur-base $ease-out;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+
+  &[data-open] {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @include up($bp-lg) {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  a {
+    display: block;
+    padding: $space-4 $space-5;
+    font-size: 1.1rem;
+    font-weight: $fw-semi;
+    color: $color-ink-900;
+    border-radius: $radius-lg;
+    text-decoration: none;
+
+    &:hover {
+      background: $color-surface-muted;
+      text-decoration: none;
+    }
+    @include focus-ring;
+  }
+}

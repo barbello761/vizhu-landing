@@ -1,0 +1,130 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface-muted;
+}
+
+.inner {
+  @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-9;
+
+  @include up($bp-lg) {
+    grid-template-columns: 1fr 1.4fr;
+    gap: $space-10;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  h2 { font-size: $fs-h1; }
+  p  {
+    color: $color-ink-500;
+    font-size: 1rem;
+
+    a {
+      font-weight: $fw-semi;
+    }
+  }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.item {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: border-color $dur-fast $ease-out;
+
+  &:hover { border-color: $color-brand-200; }
+
+  &[data-state='open'] {
+    border-color: $color-brand-300;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.trigger {
+  width: 100%;
+  text-align: left;
+  padding: $space-5 $space-6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  font-size: 1.05rem;
+  font-weight: $fw-semi;
+  color: $color-ink-900;
+  line-height: 1.35;
+  background: transparent;
+  @include focus-ring-inset;
+
+  &[data-state='open'] {
+    color: $color-brand-700;
+  }
+
+  &[data-state='open'] .chev {
+    transform: rotate(180deg);
+  }
+}
+
+.chev {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  transition: transform $dur-base $ease-out;
+  flex-shrink: 0;
+}
+
+.content {
+  overflow: hidden;
+  font-size: 0.95rem;
+  color: $color-ink-500;
+  line-height: $lh-base;
+
+  @include allow-motion {
+    &[data-state='open']   { animation: slide-down $dur-base $ease-out; }
+    &[data-state='closed'] { animation: slide-up   $dur-base $ease-out; }
+  }
+
+  p {
+    padding: 0 $space-6 $space-5;
+  }
+}
+
+@keyframes slide-down {
+  from { height: 0; }
+  to   { height: var(--radix-accordion-content-height); }
+}
+@keyframes slide-up {
+  from { height: var(--radix-accordion-content-height); }
+  to   { height: 0; }
+}
