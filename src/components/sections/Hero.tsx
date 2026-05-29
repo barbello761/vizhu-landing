@@ -92,15 +92,7 @@ export function Hero() {
                 Опробуйте сейчас
               </a>
             </Button>
-            <Button asChild variant="ghost" size="lg">
-              <a
-                href="#features"
-                aria-label="Узнать подробнее о возможностях ВИЖУ"
-              >
-                Подробнее
-                <span aria-hidden="true" style={{ marginLeft: 8 }}>→</span>
-              </a>
-            </Button>
+            
           </motion.div>
 
           <motion.ul
