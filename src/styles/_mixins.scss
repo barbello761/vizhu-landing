@@ -74,13 +74,13 @@
 // ============== Section spacing ==============
 
 @mixin section-padding {
-  padding-block: $space-9;
+  padding-block: $space-8;
 
   @include up($bp-md) {
-    padding-block: $space-10;
+    padding-block: $space-9;
   }
   @include up($bp-lg) {
-    padding-block: $space-11;
+    padding-block: $space-10;
   }
 }
 

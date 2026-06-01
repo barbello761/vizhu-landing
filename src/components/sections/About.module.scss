@@ -1,43 +1,45 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// Each About screen is its own ≤100dvh section. Light content is centred
+// vertically so the stretched-to-screen section reads as a focused slide.
 .section {
   @include section-padding;
-  background: $color-surface-muted;
-  position: relative;
+  background: $color-surface;
+
+  &[data-bg='muted'] { background: $color-surface-muted; }
+  &[data-bg='tint'] {
+    background: linear-gradient(165deg, $color-brand-050 0%, $color-surface-soft 100%);
+  }
+
+  @include up($bp-md) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 .inner {
   @include container;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $space-9;
-  align-items: start;
-
-  @include up($bp-lg) {
-    grid-template-columns: 1.05fr 1fr;
-    gap: $space-10;
-  }
-}
-
-.left {
   display: flex;
   flex-direction: column;
-  gap: $space-5;
-  max-width: 600px;
+  gap: $space-7;
+}
 
-  h2 {
-    font-size: $fs-h1;
-    color: $color-ink-900;
-  }
+.header {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  h2 { font-size: $fs-h1; }
+  p  { color: $color-ink-500; font-size: $fs-body-lg; line-height: $lh-base; }
 }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
   width: fit-content;
   padding: 6px 14px;
-  background: $color-brand-100;
+  background: $color-brand-050;
   color: $color-brand-600;
   border-radius: $radius-pill;
   font-size: 0.8rem;
@@ -46,121 +48,205 @@
   text-transform: uppercase;
 }
 
-.body {
-  font-size: $fs-body-lg;
-  color: $color-ink-500;
-  line-height: $lh-base;
+// ===== Плашки =====
+.plates {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-3;
 
-  strong {
-    color: $color-ink-900;
-    font-weight: $fw-semi;
-  }
+  @include up($bp-sm) { grid-template-columns: 1fr 1fr; gap: $space-4; }
+  @include up($bp-md) { grid-template-columns: repeat(4, 1fr); gap: $space-5; }
 }
 
-.checklist {
+.plate { display: flex; }
+
+.count {
+  font-size: $fs-stat;
+  font-weight: $fw-black;
+  color: $color-brand-600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-feature-settings: 'tnum';
+
+  span { font: inherit; color: inherit; letter-spacing: inherit; }
+}
+
+.plateInner {
+  width: 100%;
+  background: $color-surface-muted;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-6;
   display: flex;
   flex-direction: column;
-  gap: $space-3;
-  margin-top: $space-4;
+  gap: $space-2;
+  transition: box-shadow $dur-base $ease-out, transform $dur-base $ease-out;
 
-  li {
-    display: flex;
-    align-items: flex-start;
-    gap: $space-3;
-    font-size: 1rem;
-    color: $color-ink-700;
+  &:hover {
+    box-shadow: $shadow-md;
+    @include allow-motion { transform: translateY(-3px); }
+  }
+
+  > span { font-size: 0.95rem; color: $color-ink-500; }
+
+  &[data-accent] {
+    background: $color-brand-600;
+    border-color: transparent;
+    .count { color: $color-accent-yellow; }
+    > span { color: rgba(255, 255, 255, 0.85); }
+  }
+
+  // muted bg section — give plates a white surface for contrast.
+  .section[data-bg='muted'] & { background: $color-surface; }
+}
+
+// ===== Фичи =====
+.features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include up($bp-sm) { grid-template-columns: 1fr 1fr; }
+  @include up($bp-lg) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.feature {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  transition: transform $dur-base $ease-out, box-shadow $dur-base $ease-out, border-color $dur-base $ease-out;
+
+  &:hover {
+    border-color: $color-brand-200;
+    box-shadow: $shadow-md;
+    @include allow-motion { transform: translateY(-4px); }
+  }
+
+  h3 { font-size: 1.1rem; font-weight: $fw-bold; color: $color-ink-900; }
+  p  { color: $color-ink-500; font-size: 0.92rem; line-height: $lh-base; }
+}
+
+.featureIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-md;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $space-1;
+}
+
+// ===== Демонстрация: макеты + QR =====
+.showcaseRow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-7;
+
+  @include up($bp-lg) {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-8;
   }
 }
 
-.check {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  border-radius: 50%;
-  background: $color-brand-600;
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: $fw-bold;
-  margin-top: 2px;
+.gallery {
+  display: flex;
+  gap: $space-4;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin-inline: -$container-pad-mobile;
+  padding: $space-2 $container-pad-mobile $space-3;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+
+  @include up($bp-lg) {
+    flex: 1;
+    overflow: visible;
+    scroll-snap-type: none;
+    margin-inline: 0;
+    padding: 0;
+    justify-content: center;
+  }
 }
 
-.pillars {
+.galleryItem {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.qrCard {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 340px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-6;
   display: flex;
   flex-direction: column;
   gap: $space-4;
+  box-shadow: $shadow-sm;
+
+  @include up($bp-lg) {
+    width: 320px;
+  }
+
+  p { color: $color-ink-500; font-size: 0.95rem; line-height: $lh-base; }
 }
 
-.pillar {
-  display: flex;
-
-  > div {
-    position: relative;
-    padding: $space-7;
-    border-radius: $radius-xl;
-    background: $color-surface;
-    border: 1px solid $color-border;
-    transition: transform $dur-base $ease-out, box-shadow $dur-base $ease-out;
-    display: flex;
-    flex-direction: column;
-    gap: $space-3;
-    width: 100%;
-
-    &:hover {
-      box-shadow: $shadow-md;
-      @include allow-motion {
-        transform: translateX(4px);
-      }
-    }
-
-    &[data-i='0'] {
-      background: $color-brand-600;
-      color: #fff;
-      border-color: transparent;
-
-      h3 { color: #fff; }
-      p  { color: rgba(255, 255, 255, 0.85); }
-
-      .pillarBadge {
-        background: rgba(255, 255, 255, 0.2);
-        color: #fff;
-      }
-    }
-
-    &[data-i='1'] {
-      background: $color-ink-900;
-      color: #fff;
-      border-color: transparent;
-      h3 { color: #fff; }
-      p  { color: rgba(255, 255, 255, 0.8); }
-
-      .pillarBadge {
-        background: rgba(255, 255, 255, 0.16);
-        color: $color-accent-yellow;
-      }
-    }
-  }
-
-  h3 {
-    font-size: $fs-h3;
-    color: $color-ink-900;
-  }
-
-  p {
-    color: $color-ink-500;
-    font-size: 1rem;
-    line-height: $lh-base;
-  }
-}
-
-.pillarBadge {
-  align-self: flex-start;
-  font-size: 0.78rem;
-  font-weight: $fw-semi;
-  padding: 4px 10px;
-  border-radius: $radius-pill;
+.qrEyebrow {
+  width: fit-content;
+  padding: 5px 12px;
   background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.75rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.qr {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  text-decoration: none;
+  border-radius: $radius-lg;
+  transition: transform $dur-base $ease-out;
+
+  &:hover {
+    text-decoration: none;
+    @include allow-motion { transform: translateY(-2px); }
+  }
+  @include focus-ring;
+}
+
+.qrCode {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg { width: 100%; height: 100%; display: block; }
+}
+
+.qrLink {
+  font-weight: $fw-bold;
+  font-size: 1.05rem;
   color: $color-brand-600;
 }

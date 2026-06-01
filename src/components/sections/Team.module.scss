@@ -1,0 +1,184 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface-muted;
+
+  // Centre the (short) content vertically when the section is stretched to a
+  // full screen by the snap min-height — no awkward empty band at the bottom.
+  @include up($bp-md) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.header {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  h2 { font-size: $fs-h2; }
+  p  { color: $color-ink-500; font-size: 1rem; }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// Photo-first cards. One per row on phones (two looked too squished), but
+// capped + centred so the tall 7/9 photo doesn't blow up to a full screen.
+// Then 2 / 3 / 4 as the viewport grows.
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 270px);
+  justify-content: center;
+  gap: $space-4;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+  }
+  @include up($bp-md) { grid-template-columns: repeat(3, 1fr); gap: $space-5; }
+  @include up($bp-lg) { grid-template-columns: repeat(4, 1fr); }
+}
+
+.card { display: flex; }
+
+.cardInner {
+  width: 100%;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform $dur-base $ease-out, box-shadow $dur-base $ease-out, border-color $dur-base $ease-out;
+
+  &:hover {
+    border-color: $color-brand-200;
+    box-shadow: $shadow-lg;
+    @include allow-motion { transform: translateY(-4px); }
+
+    .photo img { transform: scale(1.04); }
+  }
+}
+
+// ---- Photo / placeholder ----
+.photo {
+  position: relative;
+  aspect-ratio: 7 / 9;
+  overflow: hidden;
+  background: linear-gradient(160deg, $color-brand-050, $color-surface-soft);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $dur-slow $ease-out;
+  }
+
+  // Coloured placeholder gradients, varied per card.
+  &[data-i='0'] { background: linear-gradient(160deg, #1c3ad6, #4f6cff); }
+  &[data-i='1'] { background: linear-gradient(160deg, #0a1140, #1d3a8a); }
+  &[data-i='2'] { background: linear-gradient(160deg, #1aa372, #0c7a54); }
+  &[data-i='3'] { background: linear-gradient(160deg, #3f57c4, #93a4ff); }
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.silhouette {
+  position: absolute;
+  bottom: -8%;
+  width: 78%;
+  height: 78%;
+  color: rgba(255, 255, 255, 0.16);
+}
+
+.initials {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+  font-weight: $fw-black;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 12px rgba(8, 16, 42, 0.25);
+}
+
+// ---- Body ----
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: $space-4;
+  flex: 1;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: $fw-bold;
+  color: $color-ink-900;
+  line-height: 1.2;
+}
+
+.role {
+  font-size: 0.85rem;
+  color: $color-ink-500;
+}
+
+// Icon-only contact bullets (Telegram · MAX · почта · телефон).
+.contacts {
+  display: flex;
+  gap: $space-2;
+  margin-top: $space-3;
+  flex-wrap: wrap;
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: $radius-md;
+  background: $color-surface-muted;
+  color: $color-ink-700;
+  transition:
+    background-color $dur-fast $ease-out,
+    color $dur-fast $ease-out,
+    transform $dur-fast $ease-out;
+
+  // monochrome line icon sits inside; keep a comfortable tap target.
+  min-width: 40px;
+  min-height: 40px;
+
+  &:hover {
+    background: $color-ink-900;
+    color: #fff;
+    text-decoration: none;
+    @include allow-motion { transform: translateY(-2px); }
+  }
+  @include focus-ring;
+}
