@@ -3,13 +3,15 @@ import { Logo } from '../ui/Logo';
 import { Button } from '../ui/Button';
 import styles from './Header.module.scss';
 
+// Nav per ТЗ — exactly four anchor blocks.
 const nav = [
-  { href: '#problem',  label: 'Проблема' },
-  { href: '#features', label: 'Возможности' },
-  { href: '#audience', label: 'Аудитория' },
-  { href: '#roadmap',  label: 'План' },
-  { href: '#download', label: 'Опробовать' },
+  { href: '#top',      label: 'Начало' },
+  { href: '#about',    label: 'О проекте' },
+  { href: '#team',     label: 'Команда проекта' },
+  { href: '#contacts', label: 'Контакты' },
 ];
+
+const APP_URL = 'https://app.vizhu.su';
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -65,8 +67,13 @@ export function Header() {
 
         <div className={styles.actions}>
           <Button asChild variant="primary" size="md">
-            <a href="#download" aria-label="Опробовать приложение ВИЖУ">
-              Опробовать
+            <a
+              href={APP_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Попробовать приложение ВИЖУ — открыть в новой вкладке"
+            >
+              Попробовать
             </a>
           </Button>
 

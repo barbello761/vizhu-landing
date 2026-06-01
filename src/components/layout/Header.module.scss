@@ -27,11 +27,9 @@
   align-items: center;
   justify-content: space-between;
   gap: $space-5;
-  padding-block: $space-4;
-
-  @include up($bp-md) {
-    padding-block: $space-5;
-  }
+  // Locked to the shared var so the header is EXACTLY the height the
+  // scroll offset assumes — content vertically centered inside it.
+  height: var(--header-h);
 }
 
 .brand {
@@ -141,7 +139,8 @@
 // ====== Mobile sheet ======
 .mobileSheet {
   position: fixed;
-  top: 72px;
+  // Tracks the shared header-height var, so it always sits flush below.
+  top: var(--header-h);
   left: 0;
   right: 0;
   background: #fff;
@@ -152,7 +151,7 @@
   opacity: 0;
   pointer-events: none;
   transition: transform $dur-base $ease-out, opacity $dur-base $ease-out;
-  max-height: calc(100vh - 72px);
+  max-height: calc(100dvh - var(--header-h));
   overflow-y: auto;
 
   &[data-open] {

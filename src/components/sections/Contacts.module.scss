@@ -1,0 +1,273 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  h2 { font-size: $fs-h1; }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cardWrap { display: flex; }
+
+// Two-zone card: the person (left) + a separate QR panel (right).
+// The QR sits in its own panel, away from the small avatar — scanning it
+// never frames the portrait.
+.card {
+  width: 100%;
+  max-width: 1040px;
+  background: linear-gradient(155deg, $color-ink-900 0%, $color-navy-800 65%, $color-brand-700 145%);
+  color: #fff;
+  border-radius: $radius-2xl;
+  padding: $space-7;
+  display: flex;
+  flex-direction: column;
+  gap: $space-7;
+  box-shadow: $shadow-lg;
+
+  @include up($bp-md) {
+    flex-direction: row;
+    align-items: stretch;
+    padding: $space-8;
+    gap: $space-8;
+  }
+}
+
+// ---- Left: person ----
+// Mobile: everything centred (avatar on top). Desktop: left-aligned row.
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: $space-5;
+
+  @include up($bp-md) {
+    align-items: stretch;
+    text-align: left;
+    gap: $space-6;
+  }
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+
+  @include up($bp-md) {
+    flex-direction: row;
+    align-items: center;
+    gap: $space-5;
+  }
+}
+
+.avatar {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 4 / 5;
+  flex-shrink: 0;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1c3ad6, #4f6cff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+
+  @include up($bp-md) { width: 208px; }
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.initials {
+  font-size: 3rem;
+  font-weight: $fw-black;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.02em;
+}
+
+.ident {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
+  min-width: 0;
+
+  @include up($bp-md) { align-items: flex-start; }
+}
+
+.role {
+  width: fit-content;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.14);
+  color: $color-accent-yellow;
+  border-radius: $radius-pill;
+  font-size: 0.72rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.name {
+  font-size: $fs-h2;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin: 0;
+  padding-top: $space-4;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  @include up($bp-sm) {
+    flex-direction: row;
+    align-items: baseline;
+    gap: $space-5;
+  }
+
+  dt {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: $fw-semi;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 88px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: $fw-semi;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      &:hover { color: $color-brand-200; text-decoration: underline; }
+    }
+  }
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-3;
+
+  @include up($bp-md) { justify-content: flex-start; }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: 9px 16px;
+    border-radius: $radius-pill;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-weight: $fw-semi;
+    font-size: 0.92rem;
+    min-height: 42px;
+    transition: background-color $dur-fast $ease-out, transform $dur-fast $ease-out;
+
+    &:hover {
+      background: $color-brand-600;
+      border-color: transparent;
+      text-decoration: none;
+      @include allow-motion { transform: translateY(-2px); }
+    }
+    @include focus-ring;
+  }
+}
+
+// ---- Right: QR panel ----
+.qrPanel {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  text-align: center;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: $radius-xl;
+  padding: $space-6;
+  transition: background-color $dur-base $ease-out, transform $dur-base $ease-out;
+
+  @include up($bp-md) { width: 290px; }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    @include allow-motion { transform: translateY(-3px); }
+  }
+  @include focus-ring;
+}
+
+.qrTitle {
+  font-size: 1rem;
+  font-weight: $fw-semi;
+  color: #fff;
+}
+
+.qrCode {
+  width: 176px;
+  height: 176px;
+  background: #fff;
+  border-radius: $radius-md;
+  padding: $space-2;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg { width: 100%; height: 100%; display: block; }
+}
+
+.qrSub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 180px;
+  line-height: 1.35;
+}

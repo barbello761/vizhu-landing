@@ -17,10 +17,11 @@
   margin-top: 18px; // below status bar
 }
 
-// =============== Home ================
+// =============== Home (matches app.vizhu.su) ================
 .home {
   @extend %screenBase;
-  background: $color-brand-600;
+  background: #fff;
+  color: $color-ink-900;
   gap: 10px;
 }
 
@@ -28,93 +29,119 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
-.heroCard {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 18px;
-  padding: 14px 10px 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-  backdrop-filter: blur(6px);
-}
-
-.heroTitle {
-  font-size: 18px;
-  font-weight: $fw-bold;
-  line-height: 1.1;
-}
-
-.micButton {
-  width: 44px;
-  height: 44px;
+.themeBtn {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: #fff;
+  border: 1.5px solid $color-brand-200;
   color: $color-brand-600;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.heroCard {
+  background: $color-brand-600;
+  border-radius: 18px;
+  padding: 16px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.heroTitle {
+  font-size: 16px;
+  font-weight: $fw-bold;
+  line-height: 1.15;
+}
+
+.micButton {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heroHint {
-  font-size: 9px;
-  opacity: 0.85;
-  line-height: 1.35;
+  font-size: 8.5px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
 }
 
 .sectionLabel {
-  font-size: 10px;
-  font-weight: $fw-semi;
-  margin-top: 4px;
-  letter-spacing: 0.02em;
+  font-size: 12px;
+  font-weight: $fw-bold;
+  margin-top: 2px;
+  color: $color-ink-900;
 }
 
 .quickGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 8px;
 }
 
 .quickCard {
-  background: rgba(255, 255, 255, 0.92);
-  color: $color-brand-700;
-  border-radius: 12px;
-  padding: 10px 12px;
+  background: $color-brand-600;
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px;
   font-weight: $fw-semi;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  font-size: 11px;
+  min-height: 56px;
+  gap: 12px;
+}
 
-  span {
-    font-size: 13px;
-  }
+.quickLabel {
+  font-size: 11.5px;
+  font-weight: $fw-semi;
+}
+
+.quickIcon {
+  align-self: flex-end;
+  font-size: 15px;
+  font-weight: $fw-bold;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tabBar {
   margin-top: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.95);
-  color: $color-ink-700;
-  border-radius: 14px;
-  padding: 6px 4px;
-  font-size: 9px;
+  gap: 2px;
+  padding-top: 6px;
+  border-top: 1px solid $color-border;
+  font-size: 8.5px;
   font-weight: $fw-medium;
 
   span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
     text-align: center;
-    padding: 4px 2px;
-    border-radius: 8px;
+    padding: 6px 2px;
+    border-radius: 10px;
+    color: $color-ink-400;
 
-    &[data-active='true'] {
+    &[data-active] {
       background: $color-brand-050;
       color: $color-brand-600;
       font-weight: $fw-semi;

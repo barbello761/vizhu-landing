@@ -9,7 +9,16 @@
   --ink-muted: #{$color-ink-500};
   --brand: #{$color-brand-600};
   color-scheme: light;
+
+  // Single source of truth for the sticky-header height. Header, scroll
+  // offset and hero min-height all read this so they can never drift apart.
+  // Tracks the responsive logo (36→64px) + vertical padding.
+  --header-h: 68px;
 }
+
+@media (min-width: #{$bp-sm}) { :root { --header-h: 76px; } }
+@media (min-width: #{$bp-md}) { :root { --header-h: 92px; } }
+@media (min-width: #{$bp-lg}) { :root { --header-h: 104px; } }
 
 *,
 *::before,
@@ -22,7 +31,11 @@ html {
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+
+  // Anchor jumps land the section 1px UNDER the header — never a gap that
+  // would reveal a sliver of the previous section. The section's own top
+  // padding supplies the breathing room. -1px absorbs sub-pixel rounding.
+  scroll-padding-top: calc(var(--header-h));
 
   @include reduce-motion {
     scroll-behavior: auto;
@@ -44,14 +57,22 @@ html {
   }
 }
 
-// Snap targets only carry `scroll-snap-align`. The 80px breathing room
-// under the sticky header is handled once by `scroll-padding-top` on
-// `html` — do not also add `scroll-margin-top` here, or both offsets
-// stack and the previous section's tail leaks into the viewport.
+// Snap targets only carry `scroll-snap-align`. The breathing room under the
+// sticky header is handled once by `scroll-padding-top` on `html` — do not
+// also add `scroll-margin-top` here, or both offsets stack and the previous
+// section's tail leaks into the viewport.
+//
+// `min-height` makes every snap section at least one viewport tall. Without
+// it, a section shorter than the viewport (e.g. the 4-person team grid)
+// snaps its short top to the header and leaves the next section half-shown —
+// which reads as the scroll "overshooting / undershooting". Forcing each
+// section to fill a screen makes the section-by-section landing land clean.
+// Tall sections (content already taller than a viewport) are unaffected.
 main > section {
   @media (min-width: $bp-md) and (prefers-reduced-motion: no-preference) {
     scroll-snap-align: start;
     scroll-snap-stop: normal;
+    min-height: calc(100svh - var(--header-h));
   }
 }
 
