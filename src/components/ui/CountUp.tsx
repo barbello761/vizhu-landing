@@ -32,7 +32,8 @@ export function CountUp({
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
-  const inView = useInView(ref, { once: true, amount: 0.5 });
+  // once:false — re-runs the count-up every time the number scrolls into view.
+  const inView = useInView(ref, { amount: 0.6 });
   const value = useMotionValue(0);
   const display = useTransform(value, (n) => {
     const rounded =
@@ -44,9 +45,13 @@ export function CountUp({
   });
 
   useEffect(() => {
-    if (!inView) return;
     if (reduced) {
       value.set(to);
+      return;
+    }
+    if (!inView) {
+      // Reset so it spins up again the next time it scrolls into view.
+      value.set(0);
       return;
     }
     const controls = animate(value, to, {

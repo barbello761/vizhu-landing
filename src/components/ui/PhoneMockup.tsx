@@ -27,23 +27,27 @@ export function PhoneMockup({
       role="img"
       aria-label={label ?? 'Демонстрационный экран приложения ВИЖУ'}
     >
-      <div className={styles.frame} aria-hidden="true">
-        <div className={styles.notch} />
-        <div className={styles.screen}>
-          <div className={styles.statusBar}>
-            <span className={styles.statusTime}>9:41</span>
-            <span className={styles.statusIcons}>
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-            </span>
+      {/* Fixed design-size frame, uniformly scaled — so the screen content
+          keeps the exact same proportions at every size. */}
+      <div className={styles.scaler} aria-hidden="true">
+        <div className={styles.frame}>
+          <div className={styles.notch} />
+          <div className={styles.screen}>
+            <div className={styles.statusBar}>
+              <span className={styles.statusTime}>9:41</span>
+              <span className={styles.statusIcons}>
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+              </span>
+            </div>
+            <div className={styles.content}>{children}</div>
           </div>
-          <div className={styles.content}>{children}</div>
+          <div className={styles.sideBtn} data-pos="top-left" />
+          <div className={styles.sideBtn} data-pos="mid-left" />
+          <div className={styles.sideBtn} data-pos="bot-left" />
+          <div className={styles.sideBtn} data-pos="right" />
         </div>
-        <div className={styles.sideBtn} data-pos="top-left" />
-        <div className={styles.sideBtn} data-pos="mid-left" />
-        <div className={styles.sideBtn} data-pos="bot-left" />
-        <div className={styles.sideBtn} data-pos="right" />
       </div>
     </div>
   );
