@@ -1,26 +1,38 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// Design size = 220 × 456 (the size the screen content is tuned for).
+// Bigger sizes just scale this up uniformly, keeping proportions exact.
+$design-w: 220px;
+$design-h: 456px; // 220 * 580 / 280
+
 .wrapper {
-  --w: 280px;
-  width: var(--w);
+  --scale: 1;
+  width: calc(#{$design-w} * var(--scale));
   aspect-ratio: 280 / 580;
   filter: drop-shadow(0 35px 60px rgba(8, 16, 42, 0.25));
   transition: transform $dur-slow $ease-out;
 
-  &[data-size='sm'] { --w: 220px; }
-  &[data-size='md'] { --w: 280px; }
-  &[data-size='lg'] { --w: 320px; }
+  &[data-size='sm'] { --scale: 1; }
+  &[data-size='md'] { --scale: 1.27; }
+  &[data-size='lg'] { --scale: 1.45; }
 
   @include up($bp-md) {
-    &[data-size='md'] { --w: 320px; }
-    &[data-size='lg'] { --w: 380px; }
+    &[data-size='md'] { --scale: 1.45; }
+    &[data-size='lg'] { --scale: 1.7; }
   }
 
   @include allow-motion {
     &[data-tilt='left']  { transform: rotate(-6deg); }
     &[data-tilt='right'] { transform: rotate(6deg); }
   }
+}
+
+.scaler {
+  width: $design-w;
+  height: $design-h;
+  transform: scale(var(--scale));
+  transform-origin: top left;
 }
 
 .frame {

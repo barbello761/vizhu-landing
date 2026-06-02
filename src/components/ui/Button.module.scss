@@ -103,10 +103,26 @@
   background: transparent;
   color: #fff;
   border-color: rgba(255, 255, 255, 0.4);
-
+  a{
+    color: #fff;
+  }
   &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.7);
     color: #fff;
+  }
+}
+
+// White CTA — for use on the blue hero.
+.btn.light {
+  background: #fff;
+  color: $color-brand-700;
+  box-shadow: 0 14px 34px rgba(8, 16, 42, 0.22);
+a{
+    color: inherit;
+  }
+  &:hover:not(:disabled) {
+    background: $color-brand-050;
+    color: $color-brand-700;
   }
 }

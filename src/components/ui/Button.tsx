@@ -2,7 +2,7 @@ import { Slot } from '@radix-ui/react-slot';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'outlineLight';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'outlineLight' | 'light';
 type Size = 'md' | 'lg';
 
 type Props = ComponentPropsWithoutRef<'button'> & {

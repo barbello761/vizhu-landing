@@ -1,0 +1,184 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  @include section-padding;
+  background: $color-surface-muted;
+
+  @include up($bp-md) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: $space-7;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  h2 { font-size: $fs-h1; }
+}
+
+.eyebrow {
+  width: fit-content;
+  padding: 6px 14px;
+  background: $color-brand-050;
+  color: $color-brand-600;
+  border-radius: $radius-pill;
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+// ====== Stage: arrows + viewport ======
+.stage {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-2;
+
+  @include up($bp-md) { gap: $space-5; }
+}
+
+// Side arrows — desktop only (the slide row is phone-height there, so they
+// never jump). On mobile they're hidden in favour of the bottom controls.
+.arrow {
+  display: none;
+
+  @include up($bp-md) {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    color: $color-brand-600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $shadow-sm;
+    transition: background-color $dur-fast $ease-out, transform $dur-fast $ease-out, color $dur-fast $ease-out;
+
+    &:hover {
+      background: $color-brand-600;
+      color: #fff;
+      @include allow-motion { transform: scale(1.06); }
+    }
+    @include focus-ring;
+  }
+}
+
+.viewport {
+  overflow: hidden;
+  min-width: 0;
+}
+
+.slide {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: $space-6;
+  align-items: center;
+
+  @include up($bp-md) {
+    grid-template-columns: auto 1fr;
+    gap: $space-8;
+    justify-items: stretch;
+  }
+  @include up($bp-lg) { gap: $space-10; }
+}
+
+.phone {
+  display: flex;
+  justify-content: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  text-align: center;
+  max-width: 560px;
+
+  @include up($bp-md) { text-align: left; }
+
+  h3 {
+    font-size: $fs-h2;
+    color: $color-brand-600;
+    letter-spacing: -0.02em;
+  }
+  p {
+    font-size: $fs-body-lg;
+    color: $color-ink-700;
+    line-height: $lh-base;
+  }
+}
+
+.count {
+  font-size: 0.85rem;
+  font-weight: $fw-bold;
+  letter-spacing: 0.1em;
+  color: $color-ink-400;
+  font-feature-settings: 'tnum';
+}
+
+// ====== Controls (bottom): mobile nav + dots ======
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+}
+
+// Mobile nav buttons — hidden on desktop (side arrows take over).
+.navBtn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  color: $color-brand-600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-sm;
+  transition: background-color $dur-fast $ease-out, color $dur-fast $ease-out;
+
+  &:hover { background: $color-brand-600; color: #fff; }
+  @include focus-ring;
+
+  @include up($bp-md) { display: none; }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: $space-2;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $color-border-strong;
+  transition: background-color $dur-fast $ease-out, transform $dur-fast $ease-out, width $dur-base $ease-out;
+
+  &:hover { background: $color-brand-300; }
+
+  &[data-active] {
+    width: 28px;
+    border-radius: $radius-pill;
+    background: $color-brand-600;
+  }
+  @include focus-ring;
+}

@@ -1,13 +1,30 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// Continues the pre-footer gradient (brand-700 → brand-800) so the two read
+// as one block, separated by a rounded divider pill that stops short of the
+// screen edges.
 .footer {
-  background: $color-navy-900;
-  color: rgba(255, 255, 255, 0.72);
-  padding-block: $space-9 $space-8;
-  background-image:
-    radial-gradient(60% 60% at 85% 0%, rgba(13, 68, 220, 0.35), transparent 70%),
-    radial-gradient(60% 60% at 0% 100%, rgba(13, 68, 220, 0.18), transparent 70%);
+  position: relative;
+  background: linear-gradient(180deg, $color-brand-700 0%, $color-brand-800 100%);
+  color: rgba(255, 255, 255, 0.8);
+  padding-block: $space-7 $space-8;
+}
+
+// Rounded divider line at the pre-footer / footer seam.
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  width: calc(100% - #{$container-pad-mobile} * 2);
+
+  @include up($bp-md) { width: calc(100% - #{$container-pad-tablet} * 2); }
+  @include up($bp-lg) { width: calc(100% - #{$container-pad-desktop} * 2); }
 }
 
 .inner {

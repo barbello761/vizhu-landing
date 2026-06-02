@@ -48,6 +48,48 @@
   text-transform: uppercase;
 }
 
+// ===== Проблематика (Be My Eyes) =====
+.problem {
+  display: flex;
+  gap: $space-4;
+  align-items: stretch;
+  background: linear-gradient(120deg, $color-brand-700 0%, $color-brand-500 100%);
+  color: #fff;
+  border-radius: $radius-xl;
+  padding: $space-7;
+
+  @include up($bp-md) {
+    align-items: center;
+    gap: $space-6;
+  }
+}
+
+.problemMark {
+  flex-shrink: 0;
+  width: 6px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.problemText {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  p {
+    font-size: $fs-body-lg;
+    line-height: $lh-base;
+    color: rgba(255, 255, 255, 0.88);
+
+    strong { color: #fff; font-weight: $fw-bold; }
+  }
+}
+
+.problemAccent {
+  font-weight: $fw-semi;
+  color: #fff !important;
+}
+
 // ===== Плашки =====
 .plates {
   display: grid;
@@ -77,6 +119,7 @@
   border: 1px solid $color-border;
   border-radius: $radius-xl;
   padding: $space-6;
+  padding-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: $space-2;
@@ -89,15 +132,21 @@
 
   > span { font-size: 0.95rem; color: $color-ink-500; }
 
-  &[data-accent] {
-    background: $color-brand-600;
-    border-color: transparent;
-    .count { color: $color-accent-yellow; }
-    > span { color: rgba(255, 255, 255, 0.85); }
-  }
-
   // muted bg section — give plates a white surface for contrast.
   .section[data-bg='muted'] & { background: $color-surface; }
+}
+.innerWLabel{
+  display: flex;
+  flex-direction: column;
+  color: $color-ink-500;
+  
+}
+
+.underlabel{
+  margin-top: 32px;
+  font-size: 9pt;
+  font-style: italic;
+  
 }
 
 // ===== Фичи =====

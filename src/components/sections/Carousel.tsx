@@ -1,0 +1,195 @@
+import { useState, useCallback } from 'react';
+import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer-motion';
+import { PhoneMockup } from '../ui/PhoneMockup';
+import { ScreenHome, ScreenCamera, ScreenMoney, ScreenChat, ScreenVolunteer, ScreenHistory } from '../ui/PhoneScreens';
+import styles from './Carousel.module.scss';
+
+type ScreenId = 'home' | 'camera' | 'money' | 'chat' | 'volunteer' | 'history';
+
+type Slide = {
+  screen: ScreenId;
+  variant: 'light' | 'dark';
+  title: string;
+  body: string;
+  label: string;
+};
+
+const slides: Slide[] = [
+  {
+    screen: 'camera', variant: 'dark', title: 'AI-зрение 24/7',
+    body: 'Камера смартфона становится глазами пользователя. Достаточно навести телефон на объект — и ИИ мгновенно опишет увиденное голосом: сцену вокруг, обстановку комнаты, что лежит на столе. Раньше для этого нужен был помощник, теперь незрячий человек обретает самостоятельность.',
+    label: 'Экран камеры: AI описывает сцену вслух в реальном времени.',
+  },
+  {
+    screen: 'money', variant: 'dark', title: 'Распознавание купюр',
+    body: 'Все российские банкноты от 10 до 5000 рублей распознаются меньше чем за секунду. Ассистент называет номинал голосом — больше не нужно просить кассира или прохожего проверить сдачу.',
+    label: 'Экран камеры: распознана купюра 1000 рублей, уверенность 95%.',
+  },
+  {
+    screen: 'chat', variant: 'light', title: 'Чтение текста (OCR)',
+    body: 'Печатный и частично рукописный текст ВИЖУ читает вслух: квитанции, ценники, письма, инструкции к лекарствам. Можно переспросить детали — ассистент помнит, о чём шла речь.',
+    label: 'Экран диалога: ассистент читает квитанцию вслух.',
+  },
+  {
+    screen: 'home', variant: 'light', title: 'Голосовое управление',
+    body: 'AI понимает обычную речь. Скажите «опиши, что вокруг», «прочитай документ» или «сколько денег» — приложение само поймёт команду и выполнит её. Не нужно искать пальцем иконку: достаточно произнести вслух.',
+    label: 'Главный экран: кнопка «Нажмите и говорите» и быстрые действия.',
+  },
+  {
+    screen: 'volunteer', variant: 'light', title: 'Связь с волонтёром',
+    body: 'Когда нужен живой человек — сориентироваться в незнакомом здании или найти упавшую вещь — ВИЖУ соединит с волонтёром. Видеозвонок свободному добровольцу, который увидит картинку с камеры и подскажет голосом. Функция в активной разработке.',
+    label: 'Экран вызова волонтёра: таймер ожидания и кнопка звонка.',
+  },
+  {
+    screen: 'history', variant: 'light', title: 'История запросов',
+    body: 'Все распознавания и диалоги сохраняются: можно вернуться к прошлой купюре, перечитать документ или повторить результат. Вся история — под рукой, с поиском и голосом.',
+    label: 'Экран истории: список прошлых распознаваний с датой и временем.',
+  },
+];
+
+function renderScreen(s: ScreenId) {
+  switch (s) {
+    case 'home':      return <ScreenHome />;
+    case 'camera':    return <ScreenCamera />;
+    case 'money':     return <ScreenMoney />;
+    case 'chat':      return <ScreenChat />;
+    case 'volunteer': return <ScreenVolunteer />;
+    case 'history':   return <ScreenHistory />;
+  }
+}
+
+export function Carousel() {
+  const reduced = useReducedMotion();
+  const [[index, dir], setState] = useState<[number, number]>([0, 0]);
+  const n = slides.length;
+
+  const goto = useCallback(
+    (next: number, direction: number) => setState([(next + n) % n, direction]),
+    [n],
+  );
+  const paginate = useCallback((d: number) => goto(index + d, d), [goto, index]);
+
+  const variants: Variants = {
+    enter: (d: number) => ({ opacity: 0, x: reduced ? 0 : d > 0 ? 64 : -64 }),
+    center: { opacity: 1, x: 0 },
+    exit: (d: number) => ({ opacity: 0, x: reduced ? 0 : d > 0 ? -64 : 64 }),
+  };
+
+  const slide = slides[index];
+
+  return (
+    <section
+      id="features"
+      className={styles.section}
+      aria-labelledby="carousel-title"
+      aria-roledescription="карусель"
+    >
+      <div className={styles.inner}>
+        <header className={styles.header}>
+          <span className={styles.eyebrow}>Возможности</span>
+          <h2 id="carousel-title">Что умеет ВИЖУ</h2>
+        </header>
+
+        <div
+          className={styles.stage}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); paginate(-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); paginate(1); }
+          }}
+        >
+          <button
+            type="button"
+            className={styles.arrow}
+            onClick={() => paginate(-1)}
+            aria-label="Предыдущая возможность"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" d="m15 6-6 6 6 6" />
+            </svg>
+          </button>
+
+          <div className={styles.viewport} aria-live="polite">
+            <AnimatePresence mode="wait" custom={dir} initial={false}>
+              <motion.div
+                key={index}
+                className={styles.slide}
+                custom={dir}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: reduced ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
+                role="group"
+                aria-roledescription="слайд"
+                aria-label={`${index + 1} из ${n}: ${slide.title}`}
+              >
+                <div className={styles.phone}>
+                  <PhoneMockup size="sm" variant={slide.variant} label={slide.label}>
+                    {renderScreen(slide.screen)}
+                  </PhoneMockup>
+                </div>
+
+                <div className={styles.copy}>
+                  <span className={styles.count}>{index + 1} / {n}</span>
+                  <h3>{slide.title}</h3>
+                  <p>{slide.body}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            type="button"
+            className={styles.arrow}
+            onClick={() => paginate(1)}
+            aria-label="Следующая возможность"
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" d="m9 6 6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles.controls}>
+          {/* Mobile-only nav buttons (side arrows are desktop-only) */}
+          <button
+            type="button"
+            className={styles.navBtn}
+            onClick={() => paginate(-1)}
+            aria-label="Предыдущая возможность"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" d="m15 6-6 6 6 6" />
+            </svg>
+          </button>
+
+          <div className={styles.dots} role="tablist" aria-label="Возможности приложения">
+            {slides.map((s, i) => (
+              <button
+                key={s.title}
+                type="button"
+                role="tab"
+                className={styles.dot}
+                data-active={i === index || undefined}
+                aria-selected={i === index}
+                aria-label={s.title}
+                onClick={() => goto(i, i > index ? 1 : -1)}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={styles.navBtn}
+            onClick={() => paginate(1)}
+            aria-label="Следующая возможность"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" d="m9 6 6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}

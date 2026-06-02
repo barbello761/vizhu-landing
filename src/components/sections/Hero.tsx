@@ -1,5 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '../ui/Button';
+import { Logo } from '../ui/Logo';
+import { PhoneMockup } from '../ui/PhoneMockup';
+import { ScreenHome } from '../ui/PhoneScreens';
 import styles from './Hero.module.scss';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -15,47 +18,61 @@ export function Hero() {
 
   return (
     <section id="top" className={styles.hero} aria-labelledby="hero-title">
-      {/* Full-bleed background. Drop a real СМИ photo into
-          /public/assets/hero-bg.jpg and it will replace the gradient. */}
       <div className={styles.bg} aria-hidden="true">
-        <div className={styles.photo} />
-        <div className={styles.overlay} />
+        <div className={styles.blob} data-pos="a" />
+        <div className={styles.blob} data-pos="b" />
         <div className={styles.grid} />
       </div>
 
       <div className={styles.inner}>
-        <motion.p className={styles.kicker} {...rise(0)}>
-          <span className={styles.dot} aria-hidden="true" />
-          Доступно 24/7 · бесплатно по ИПРА
-        </motion.p>
+        <div className={styles.copy}>
+          <motion.div className={styles.logoWrap} {...rise(0)}>
+            <Logo variant="light" withWordmark />
+          </motion.div>
 
-        <motion.h1 id="hero-title" className={styles.title} {...rise(0.1)}>
-          <span className={styles.brand}>«ВИЖУ»</span>
-          {' — '}российский AI-ассистент<br className={styles.brBreak} /> для незрячих
-        </motion.h1>
+          <motion.h1 id="hero-title" className={styles.title} {...rise(0.1)}>
+            Первый российский<br className={styles.brBreak} /> AI-ассистент для незрячих
+          </motion.h1>
 
-        <motion.p className={styles.lede} {...rise(0.25)}>
-          Распознавайте купюры, читайте текст, вызывайте волонтёра 24/7.
-        </motion.p>
+          <motion.p className={styles.lede} {...rise(0.25)}>
+            На базе российских мультимодальных моделей GigaChat и YandexGPT —
+            круглосуточная аудиальная помощь незрячим и слабовидящим пользователям,
+            голосом и без барьеров.
+          </motion.p>
 
-        <motion.div className={styles.ctas} {...rise(0.4)}>
-          {/* Primary (первостепенная) → the app itself */}
-          <Button asChild variant="primary" size="lg">
-            <a
-              href={APP_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label="Попробовать приложение ВИЖУ — открыть в новой вкладке"
+          <motion.div className={styles.ctas} {...rise(0.4)}>
+            <Button asChild variant="light" size="lg">
+              <a
+                href={APP_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Попробовать приложение ВИЖУ — открыть в новой вкладке"
+              >
+                Попробовать
+              </a>
+            </Button>
+            <Button asChild variant="outlineLight" size="lg">
+              <a href="#about" aria-label="Подробнее о проекте — перейти к разделу «О проекте»">
+                Подробнее
+              </a>
+            </Button>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className={styles.visual}
+          initial={{ opacity: 0, scale: 0.9, rotate: reduced ? 0 : -4 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 0.3 }}
+        >
+          <div className={styles.phoneWrap}>
+            <PhoneMockup
+              size="md"
+              label="Главный экран приложения ВИЖУ: большая кнопка «Нажмите и говорите» и быстрые действия"
             >
-              Попробовать
-            </a>
-          </Button>
-          {/* Secondary (второстепенная) → О проекте */}
-          <Button asChild variant="outlineLight" size="lg">
-            <a href="#about" aria-label="Подробнее о проекте — перейти к разделу «О проекте»">
-              Подробнее
-            </a>
-          </Button>
+              <ScreenHome />
+            </PhoneMockup>
+          </div>
         </motion.div>
       </div>
 

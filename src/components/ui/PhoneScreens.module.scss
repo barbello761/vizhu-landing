@@ -189,6 +189,48 @@
   padding: 10px 12px;
   font-size: 10px;
   line-height: 1.4;
+
+  strong { color: $color-brand-600; font-weight: $fw-bold; }
+}
+
+// ---- Banknote variant ----
+.cameraFeed[data-kind='money'] {
+  background:
+    radial-gradient(70% 70% at 50% 36%, rgba(150, 200, 160, 0.25), transparent 70%),
+    linear-gradient(180deg, #243528 0%, #0a0e1c 100%);
+}
+
+.bill {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  width: 72%;
+  aspect-ratio: 21 / 10;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #c3dac8 0%, #97bca2 55%, #b9d2bf 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: #2c4733;
+}
+
+.billValue {
+  font-size: 24px;
+  font-weight: $fw-black;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.bill small {
+  font-size: 5.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
 }
 
 .cameraControls {
@@ -212,6 +254,7 @@
   &[data-kind='close'] { background: #d63a3a; }
   &[data-kind='mic']   { background: $color-brand-600; }
   &[data-kind='chat']  { background: $color-brand-400; }
+  &[data-kind='undo']  { background: rgba(255, 255, 255, 0.16); }
 }
 
 // =============== Chat ================
@@ -366,4 +409,102 @@
   padding: 10px;
   border-radius: 999px;
   font-weight: $fw-semi;
+}
+
+// =============== History ================
+.history {
+  @extend %screenBase;
+  background: #fff;
+  color: $color-ink-900;
+  gap: 10px;
+}
+
+.histHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.histBack {
+  font-size: 20px;
+  font-weight: $fw-bold;
+  color: $color-brand-600;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid $color-brand-200;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.histTitle {
+  font-size: 15px;
+  font-weight: $fw-bold;
+}
+
+.histSearch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: $color-surface-muted;
+  border-radius: 999px;
+  padding: 8px 8px 8px 12px;
+  color: $color-ink-400;
+}
+
+.histSearchText {
+  flex: 1;
+  font-size: 10px;
+}
+
+.histMic {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: $color-brand-600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.histDate {
+  font-size: 12px;
+  font-weight: $fw-bold;
+  color: $color-ink-900;
+  margin-top: 2px;
+}
+
+.histList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.histCard {
+  background: $color-brand-600;
+  color: #fff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.histResult {
+  font-size: 13px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+.histMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.8);
 }
