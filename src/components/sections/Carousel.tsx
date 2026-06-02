@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer-motion';
 import { PhoneMockup } from '../ui/PhoneMockup';
 import { ScreenHome, ScreenCamera, ScreenMoney, ScreenChat, ScreenVolunteer, ScreenHistory } from '../ui/PhoneScreens';
@@ -37,12 +37,12 @@ const slides: Slide[] = [
   },
   {
     screen: 'volunteer', variant: 'light', title: 'Связь с волонтёром',
-    body: 'Когда нужен живой человек — сориентироваться в незнакомом здании или найти упавшую вещь — ВИЖУ соединит с волонтёром. Видеозвонок свободному добровольцу, который увидит картинку с камеры и подскажет голосом. Функция в активной разработке.',
+    body: 'Когда нужен живой человек — сориентироваться \nв незнакомом здании или найти упавшую вещь — ВИЖУ соединит с волонтёром. Видеозвонок свободному добровольцу, который увидит картинку с камеры \nи подскажет голосом. Функция в активной разработке.',
     label: 'Экран вызова волонтёра: таймер ожидания и кнопка звонка.',
   },
   {
     screen: 'history', variant: 'light', title: 'История запросов',
-    body: 'Все распознавания и диалоги сохраняются: можно вернуться к прошлой купюре, перечитать документ или повторить результат. Вся история — под рукой, с поиском и голосом.',
+    body: 'Все распознавания и диалоги сохраняются: можно вернуться к прошлой купюре, перечитать документ \nили повторить результат. Вся история — под рукой, \nс поиском и голосом.',
     label: 'Экран истории: список прошлых распознаваний с датой и временем.',
   },
 ];
@@ -69,6 +69,15 @@ export function Carousel() {
   );
   const paginate = useCallback((d: number) => goto(index + d, d), [goto, index]);
 
+  // Auto-advance every 6s. Re-arms on each slide change; pauses on hover /
+  // focus-within / drag and is disabled for prefers-reduced-motion.
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused || reduced) return;
+    const id = window.setTimeout(() => paginate(1), 6000);
+    return () => window.clearTimeout(id);
+  }, [index, paused, reduced, paginate]);
+
   const variants: Variants = {
     enter: (d: number) => ({ opacity: 0, x: reduced ? 0 : d > 0 ? 64 : -64 }),
     center: { opacity: 1, x: 0 },
@@ -83,6 +92,10 @@ export function Carousel() {
       className={styles.section}
       aria-labelledby="carousel-title"
       aria-roledescription="карусель"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
     >
       <div className={styles.inner}>
         <header className={styles.header}>
@@ -122,6 +135,16 @@ export function Carousel() {
                 role="group"
                 aria-roledescription="слайд"
                 aria-label={`${index + 1} из ${n}: ${slide.title}`}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.18}
+                onDragStart={() => setPaused(true)}
+                onDragEnd={(_, info) => {
+                  const power = info.offset.x * info.velocity.x;
+                  if (info.offset.x < -60 || power < -6000) paginate(1);
+                  else if (info.offset.x > 60 || power > 6000) paginate(-1);
+                  setPaused(false);
+                }}
               >
                 <div className={styles.phone}>
                   <PhoneMockup size="sm" variant={slide.variant} label={slide.label}>

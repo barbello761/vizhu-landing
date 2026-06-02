@@ -31,13 +31,13 @@ export function Hero() {
           </motion.div>
 
           <motion.h1 id="hero-title" className={styles.title} {...rise(0.1)}>
-            Первый российский<br className={styles.brBreak} /> AI-ассистент для незрячих
+            Первый российский<br className={styles.brBreak} /> AI-ассистент <br/> для незрячих
           </motion.h1>
 
           <motion.p className={styles.lede} {...rise(0.25)}>
-            На базе российских мультимодальных моделей GigaChat и YandexGPT —
+            На базе российских мультимодальных моделей <br />GigaChat и YandexGPT —
             круглосуточная аудиальная помощь незрячим и слабовидящим пользователям,
-            голосом и без барьеров.
+            голосом и без барьеров
           </motion.p>
 
           <motion.div className={styles.ctas} {...rise(0.4)}>

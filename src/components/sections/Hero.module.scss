@@ -92,6 +92,7 @@
   line-height: 1.06;
   letter-spacing: -0.03em;
   color: #fff;
+  min-width: 680px;
 
   @include up($bp-lg) {
     font-size: clamp(2.4rem, 1.4rem + 2.6vw, 3.6rem);

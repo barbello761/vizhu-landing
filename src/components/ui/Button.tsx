@@ -1,4 +1,4 @@
-import { Slot } from '@radix-ui/react-slot';
+import { Slot, Slottable } from '@radix-ui/react-slot';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
@@ -24,6 +24,8 @@ export function Button({
   ...rest
 }: Props) {
   const Comp = asChild ? Slot : 'button';
+  // Slottable lets the consumer's element (e.g. <a>) receive the .btn class
+  // directly, so the WHOLE button area is the link — not just the text.
   return (
     <Comp
       className={[styles.btn, styles[variant], styles[size], className]
@@ -31,19 +33,13 @@ export function Button({
         .join(' ')}
       {...rest}
     >
-      <span className={styles.inner}>
-        {iconLeading && (
-          <span className={styles.icon} aria-hidden="true">
-            {iconLeading}
-          </span>
-        )}
-        <span>{children}</span>
-        {iconTrailing && (
-          <span className={styles.icon} aria-hidden="true">
-            {iconTrailing}
-          </span>
-        )}
-      </span>
+      {iconLeading && (
+        <span className={styles.icon} aria-hidden="true">{iconLeading}</span>
+      )}
+      <Slottable>{children}</Slottable>
+      {iconTrailing && (
+        <span className={styles.icon} aria-hidden="true">{iconTrailing}</span>
+      )}
     </Comp>
   );
 }
