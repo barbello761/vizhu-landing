@@ -10,7 +10,9 @@ $design-h: 456px; // 220 * 580 / 280
   --scale: 1;
   width: calc(#{$design-w} * var(--scale));
   aspect-ratio: 280 / 580;
-  filter: drop-shadow(0 35px 60px rgba(8, 16, 42, 0.25));
+  // Lighter blur — large drop-shadow filters are costly to composite on
+  // mobile GPUs during the carousel drag/transition.
+  filter: drop-shadow(0 20px 34px rgba(8, 16, 42, 0.22));
   transition: transform $dur-slow $ease-out;
 
   &[data-size='sm'] { --scale: 1; }

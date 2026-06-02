@@ -91,6 +91,10 @@
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+  // Composite the whole (heavy) slide on the GPU so dragging just moves the
+  // layer instead of repainting the phone mock-up every frame — kills swipe lag.
+  will-change: transform;
+  backface-visibility: hidden;
 
   &:active { cursor: grabbing; }
 

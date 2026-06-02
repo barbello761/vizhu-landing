@@ -92,7 +92,6 @@
   line-height: 1.06;
   letter-spacing: -0.03em;
   color: #fff;
-  min-width: 680px;
 
   @include up($bp-lg) {
     font-size: clamp(2.4rem, 1.4rem + 2.6vw, 3.6rem);
@@ -110,6 +109,7 @@
   line-height: $lh-base;
   max-width: 580px;
   font-weight: $fw-medium;
+  @include up($bp-sm) { white-space: pre-wrap; }
 }
 
 .ctas {
@@ -133,7 +133,7 @@
 .phoneWrap {
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 40px 70px rgba(5, 10, 44, 0.45));
+  filter: drop-shadow(0 26px 42px rgba(5, 10, 44, 0.4));
   transform: perspective(1200px) rotateY(-8deg) rotateX(2deg);
 
   @include reduce-motion { transform: none; }
