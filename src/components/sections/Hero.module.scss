@@ -139,6 +139,21 @@
   @include reduce-motion { transform: none; }
 }
 
+// ====== Phone screenshot ======
+.phoneImg {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+
+  @include up($bp-md) {
+    width: auto;
+    max-width: none;
+    height: 560px;
+  }
+  @include up($bp-lg) { height: 640px; }
+}
+
 // ====== Scroll hint ======
 .scroll {
   position: absolute;

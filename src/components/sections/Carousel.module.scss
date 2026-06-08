@@ -111,6 +111,14 @@
   justify-content: center;
 }
 
+.phoneImg {
+  height: 380px;
+  width: auto;
+  display: block;
+
+  @include up($bp-md) { height: 440px; }
+}
+
 .copy {
   display: flex;
   flex-direction: column;

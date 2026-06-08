@@ -1,8 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Logo } from '../ui/Logo';
-import { PhoneMockup } from '../ui/PhoneMockup';
-import { ScreenHome } from '../ui/PhoneScreens';
 import styles from './Hero.module.scss';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -64,12 +62,11 @@ export function Hero() {
           transition={{ duration: 1, ease: EASE, delay: 0.3 }}
         >
           <div className={styles.phoneWrap}>
-            <PhoneMockup
-              size="md"
-              label="Главный экран приложения ВИЖУ: большая кнопка «Нажмите и говорите» и быстрые действия"
-            >
-              <ScreenHome />
-            </PhoneMockup>
+            <img
+              src="/assets/screens/screen-hero.png"
+              alt="Главный экран приложения ВИЖУ"
+              className={styles.phoneImg}
+            />
           </div>
         </motion.div>
       </div>

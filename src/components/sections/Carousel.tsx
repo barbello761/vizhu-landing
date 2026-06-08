@@ -1,14 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer-motion';
-import { PhoneMockup } from '../ui/PhoneMockup';
-import { ScreenHome, ScreenCamera, ScreenMoney, ScreenChat, ScreenVolunteer, ScreenHistory } from '../ui/PhoneScreens';
 import styles from './Carousel.module.scss';
 
-type ScreenId = 'home' | 'camera' | 'money' | 'chat' | 'volunteer' | 'history';
-
 type Slide = {
-  screen: ScreenId;
-  variant: 'light' | 'dark';
+  imgSrc: string;
   title: string;
   body: string;
   label: string;
@@ -16,47 +11,37 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    screen: 'camera', variant: 'dark', title: 'AI-зрение 24/7',
+    imgSrc: '/assets/screens/screen-camera.png', title: 'AI-зрение 24/7',
     body: 'Камера смартфона становится глазами пользователя. Достаточно навести телефон на объект — и ИИ мгновенно опишет увиденное голосом: сцену вокруг, обстановку комнаты, что лежит на столе. Раньше для этого нужен был помощник, теперь незрячий человек обретает самостоятельность.',
     label: 'Экран камеры: AI описывает сцену вслух в реальном времени.',
   },
   {
-    screen: 'money', variant: 'dark', title: 'Распознавание купюр',
+    imgSrc: '/assets/screens/screen-money.png', title: 'Распознавание купюр',
     body: 'Все российские банкноты от 10 до 5000 рублей распознаются меньше чем за секунду. Ассистент называет номинал голосом — больше не нужно просить кассира или прохожего проверить сдачу.',
     label: 'Экран камеры: распознана купюра 1000 рублей, уверенность 95%.',
   },
   {
-    screen: 'chat', variant: 'light', title: 'Чтение текста (OCR)',
+    imgSrc: '/assets/screens/screen-chat.png', title: 'Чтение текста (OCR)',
     body: 'Печатный и частично рукописный текст ВИЖУ читает вслух: квитанции, ценники, письма, инструкции к лекарствам. Можно переспросить детали — ассистент помнит, о чём шла речь.',
     label: 'Экран диалога: ассистент читает квитанцию вслух.',
   },
   {
-    screen: 'home', variant: 'light', title: 'Голосовое управление',
+    imgSrc: '/assets/screens/screen-home.png', title: 'Голосовое управление',
     body: 'AI понимает обычную речь. Скажите «опиши, что вокруг», «прочитай документ» или «сколько денег» — приложение само поймёт команду и выполнит её. Не нужно искать пальцем иконку: достаточно произнести вслух.',
     label: 'Главный экран: кнопка «Нажмите и говорите» и быстрые действия.',
   },
   {
-    screen: 'volunteer', variant: 'light', title: 'Связь с волонтёром',
+    imgSrc: '/assets/screens/screen-volunteer.png', title: 'Связь с волонтёром',
     body: 'Когда нужен живой человек — сориентироваться \nв незнакомом здании или найти упавшую вещь — ВИЖУ соединит с волонтёром. Видеозвонок свободному добровольцу, который увидит картинку с камеры \nи подскажет голосом. Функция в активной разработке.',
     label: 'Экран вызова волонтёра: таймер ожидания и кнопка звонка.',
   },
   {
-    screen: 'history', variant: 'light', title: 'История запросов',
+    imgSrc: '/assets/screens/screen-history.png', title: 'История запросов',
     body: 'Все распознавания и диалоги сохраняются: можно вернуться к прошлой купюре, перечитать документ \nили повторить результат. Вся история — под рукой, \nс поиском и голосом.',
     label: 'Экран истории: список прошлых распознаваний с датой и временем.',
   },
 ];
 
-function renderScreen(s: ScreenId) {
-  switch (s) {
-    case 'home':      return <ScreenHome />;
-    case 'camera':    return <ScreenCamera />;
-    case 'money':     return <ScreenMoney />;
-    case 'chat':      return <ScreenChat />;
-    case 'volunteer': return <ScreenVolunteer />;
-    case 'history':   return <ScreenHistory />;
-  }
-}
 
 export function Carousel() {
   const reduced = useReducedMotion();
@@ -147,9 +132,11 @@ export function Carousel() {
                 }}
               >
                 <div className={styles.phone}>
-                  <PhoneMockup size="sm" variant={slide.variant} label={slide.label}>
-                    {renderScreen(slide.screen)}
-                  </PhoneMockup>
+                  <img
+                    src={slide.imgSrc}
+                    alt={slide.label}
+                    className={styles.phoneImg}
+                  />
                 </div>
 
                 <div className={styles.copy}>
