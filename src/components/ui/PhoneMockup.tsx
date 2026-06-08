@@ -7,6 +7,7 @@ type Props = {
   tilt?: 'left' | 'right' | 'none';
   variant?: 'light' | 'dark';
   size?: 'sm' | 'md' | 'lg';
+  noStatusBar?: boolean;
 };
 
 // iPhone-style frame. Screen content is fully decorative
@@ -17,6 +18,7 @@ export function PhoneMockup({
   tilt = 'none',
   variant = 'light',
   size = 'md',
+  noStatusBar = false,
 }: Props) {
   return (
     <div
@@ -33,14 +35,16 @@ export function PhoneMockup({
         <div className={styles.frame}>
           <div className={styles.notch} />
           <div className={styles.screen}>
-            <div className={styles.statusBar}>
-              <span className={styles.statusTime}>9:41</span>
-              <span className={styles.statusIcons}>
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-              </span>
-            </div>
+            {!noStatusBar && (
+              <div className={styles.statusBar}>
+                <span className={styles.statusTime}>9:41</span>
+                <span className={styles.statusIcons}>
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                  <span className={styles.dot} />
+                </span>
+              </div>
+            )}
             <div className={styles.content}>{children}</div>
           </div>
           <div className={styles.sideBtn} data-pos="top-left" />
