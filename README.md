@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# ВИЖУ — лендинг
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Промо-страница сервиса [vizhu.su](https://vizhu.su): рассказывает о проекте,
+команде и ведёт пользователя в приложение.
 
-Currently, two official plugins are available:
+Это отдельный репозиторий, подключённый к основному проекту как git-сабмодуль
+(`landing/`). Само приложение живёт в `front/`, API — в `api/`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Стек
 
-## React Compiler
+React 19 + TypeScript, Vite, SCSS-модули. Анимации — framer-motion,
+доступные примитивы — Radix UI, QR-код для перехода в приложение — qrcode.react.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## Структура
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  components/
+    layout/     Header, Footer
+    sections/   Hero, About, Carousel, Team, Contacts — экраны страницы
+    ui/         переиспользуемое: Button, Container, Logo, PhoneMockup, Reveal…
+  data/team.ts  состав команды для секции Team
+  styles/       переменные, миксины, глобальные стили
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Порядок секций задаётся в `src/App.tsx` — добавить новую можно, положив
+компонент в `components/sections` и вставив его туда.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+
+## Отдельно пару слов про доступность
+
+Проект делается для незрячих и слабовидящих пользователей, и лендинг — не
+исключение. В нем также присутствуют осмысленные `alt`, видимый фокус,
+достаточный контраст, семантические заголовки и `aria`-атрибуты там, где
+визуальный смысл не передаётся текстом. 
