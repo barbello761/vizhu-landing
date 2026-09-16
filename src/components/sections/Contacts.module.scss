@@ -5,9 +5,13 @@
 // (not full-screen) so it sits right above the footer, in one blue block.
 .section {
   @include section-padding;
-  padding-bottom: $space-6;
-  // Top half of the unified pre-footer→footer gradient (continues in Footer).
-  background: linear-gradient(180deg, $color-brand-600 0%, $color-brand-700 100%);
+  padding-bottom: $space-9;
+  // Top half of the unified pre-footer→footer background (continues in Footer).
+  // background-attachment: fixed keeps the image aligned across both sections
+  // so the seam between this block and the footer is invisible.
+  background:
+    url('../../../public/assets/bg/bg.webp') center / cover no-repeat fixed,
+    linear-gradient(180deg, $color-brand-600 0%, $color-brand-700 100%);
   color: #fff;
   // Opt out of the full-screen snap min-height — this is a pre-footer.
   min-height: auto;
@@ -23,10 +27,10 @@
 }
 
 .title {
-  font-size: $fs-h1;
+  font-size: $fs-h2;
   color: #fff;
   letter-spacing: -0.02em;
-  margin-bottom: $space-5;
+  margin-bottom: $space-2;
 }
 
 .name {

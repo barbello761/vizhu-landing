@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-block: $space-11 $space-11;
   }
 }
 
@@ -25,18 +26,6 @@
   gap: $space-3;
 
   h2 { font-size: $fs-h1; }
-}
-
-.eyebrow {
-  width: fit-content;
-  padding: 6px 14px;
-  background: $color-brand-050;
-  color: $color-brand-600;
-  border-radius: $radius-pill;
-  font-size: 0.8rem;
-  font-weight: $fw-bold;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 // ====== Stage: arrows + viewport ======
@@ -99,16 +88,22 @@
   &:active { cursor: grabbing; }
 
   @include up($bp-md) {
-    grid-template-columns: auto 1fr;
-    gap: $space-8;
+    grid-template-columns: minmax(0, 480px) auto;
+    justify-content: center;
+    gap: $space-7;
     justify-items: stretch;
   }
-  @include up($bp-lg) { gap: $space-10; }
+  @include up($bp-lg) { gap: $space-8; }
 }
 
 .phone {
   display: flex;
   justify-content: center;
+
+  @include up($bp-md) {
+    order: 2;
+    justify-content: flex-end;
+  }
 }
 
 .phoneImg {
@@ -127,7 +122,10 @@
   max-width: 560px;
   white-space: pre-wrap;
 
-  @include up($bp-md) { text-align: left; }
+  @include up($bp-md) {
+    order: 1;
+    text-align: left;
+  }
 
   h3 {
     font-size: $fs-h2;
@@ -155,6 +153,7 @@
   align-items: center;
   justify-content: center;
   gap: $space-4;
+  margin-top: $space-7;
 }
 
 // Mobile nav buttons — hidden on desktop (side arrows take over).

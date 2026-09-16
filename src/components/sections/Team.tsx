@@ -17,9 +17,7 @@ export function Team() {
     <section id="team" className={styles.section} aria-labelledby="team-title">
       <div className={styles.inner}>
         <Reveal as="header" className={styles.header}>
-          <span className={styles.eyebrow}>Команда проекта</span>
           <h2 id="team-title">Над ВИЖУ работают</h2>
-          <p>Аналитики, инженеры и дизайнер — команда «Такой-то Бизнес» проекта «Я в деле».</p>
         </Reveal>
 
         <RevealStagger

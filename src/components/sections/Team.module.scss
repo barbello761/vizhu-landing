@@ -18,7 +18,7 @@
   @include container;
   display: flex;
   flex-direction: column;
-  gap: $space-6;
+  gap: $space-9;
 }
 
 .header {
@@ -29,18 +29,6 @@
 
   h2 { font-size: $fs-h2; }
   p  { color: $color-ink-500; font-size: 1rem; }
-}
-
-.eyebrow {
-  width: fit-content;
-  padding: 6px 14px;
-  background: $color-brand-050;
-  color: $color-brand-600;
-  border-radius: $radius-pill;
-  font-size: 0.8rem;
-  font-weight: $fw-bold;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 // Photo-first cards. One per row on phones (two looked too squished), but

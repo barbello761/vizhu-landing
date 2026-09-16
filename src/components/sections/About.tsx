@@ -6,7 +6,7 @@ import styles from './About.module.scss';
 const plates = [
   { value: 423_658, suffix: '', label: 'взрослых незрячих и слабовидящих в России', accent: false, spin: true },
   { value: 24, suffix: '/7', label: 'помощь голосом — днём и ночью, без выходных', accent: true },
-  { value: 3, prefix: '< ', suffix: ' сек', label: 'на описание сцены через GigaChat Vision', accent: false },
+  { value: 3, prefix: '< ', label: 'секунд на описание сцены через GigaChat Vision', accent: false },
   { value: 0, prefix: '', suffix: ' ₽', label: 'для пользователей с ИПРА — Premium бесплатно*', accent: false, underLabel: '* — планируется в перспективе' },
 ];
 
@@ -15,7 +15,6 @@ export function About() {
     <section id="about" className={styles.section} aria-labelledby="about-title">
       <div className={styles.inner}>
         <Reveal as="header" className={styles.header}>
-          <span className={styles.eyebrow}>О проекте</span>
           <h2 id="about-title">Голос вместо зрения — там, где это нужно</h2>
           <p>
             Возвращаем самостоятельность незрячим людям с помощью AI и волонтеров

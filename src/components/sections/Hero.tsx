@@ -1,10 +1,9 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { Button } from '../ui/Button';
-import { Logo } from '../ui/Logo';
-import styles from './Hero.module.scss';
+import { motion, useReducedMotion } from "framer-motion";
+import { Button } from "../ui/Button";
+import styles from "./Hero.module.scss";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const APP_URL = 'https://app.vizhu.su';
+const APP_URL = "https://app.vizhu.su";
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -24,17 +23,18 @@ export function Hero() {
 
       <div className={styles.inner}>
         <div className={styles.copy}>
-          <motion.div className={styles.logoWrap} {...rise(0)}>
-            <Logo variant="light" withWordmark />
-          </motion.div>
+          <div className={styles.copy_text}>
+            <motion.h1 id="hero-title" className={styles.title} {...rise(0.1)}>
+              Первый российский
+              <br className={styles.brBreak} /> AI-ассистент <br /> для незрячих
+            </motion.h1>
 
-          <motion.h1 id="hero-title" className={styles.title} {...rise(0.1)}>
-            Первый российский<br className={styles.brBreak} /> AI-ассистент <br/> для незрячих
-          </motion.h1>
-
-          <motion.p className={styles.lede} {...rise(0.25)}>
-            {'На базе российских мультимодальных моделей \nGigaChat и YandexGPT — круглосуточная аудиальная помощь незрячим и слабовидящим пользователям, голосом и без барьеров'}
-          </motion.p>
+            <motion.p className={styles.lede} {...rise(0.25)}>
+              {
+                "На базе российских мультимодальных моделей \nGigaChat и YandexGPT — круглосуточная аудиальная помощь незрячим и слабовидящим пользователям, голосом и без барьеров"
+              }
+            </motion.p>
+          </div>
 
           <motion.div className={styles.ctas} {...rise(0.4)}>
             <Button asChild variant="light" size="lg">
@@ -48,7 +48,10 @@ export function Hero() {
               </a>
             </Button>
             <Button asChild variant="outlineLight" size="lg">
-              <a href="#about" aria-label="Подробнее о проекте — перейти к разделу «О проекте»">
+              <a
+                href="#about"
+                aria-label="Подробнее о проекте — перейти к разделу «О проекте»"
+              >
                 Подробнее
               </a>
             </Button>
@@ -63,7 +66,7 @@ export function Hero() {
         >
           <div className={styles.phoneWrap}>
             <img
-              src="/assets/screens/screen-hero.png"
+              src="/assets/screens/screen-hero.webp"
               alt="Главный экран приложения ВИЖУ"
               className={styles.phoneImg}
             />

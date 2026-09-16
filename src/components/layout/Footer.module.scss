@@ -2,30 +2,18 @@
 @use '../../styles/mixins' as *;
 
 // Continues the pre-footer gradient (brand-700 → brand-800) so the two read
-// as one block, separated by a rounded divider pill that stops short of the
-// screen edges.
+// as one block.
 .footer {
   position: relative;
-  background: linear-gradient(180deg, $color-brand-700 0%, $color-brand-800 100%);
+  // background-attachment: fixed keeps the image aligned with Contacts above
+  // it so the pre-footer→footer seam is invisible.
+  background:
+    url("../../../public/assets/bg/bg.webp") center / cover no-repeat fixed,
+    linear-gradient(180deg, $color-brand-700 0%, $color-brand-800 100%);
   color: rgba(255, 255, 255, 0.8);
-  padding-block: $space-7 $space-8;
+  padding-block: $space-9 $space-8;
 }
 
-// Rounded divider line at the pre-footer / footer seam.
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 5px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.6);
-  width: calc(100% - #{$container-pad-mobile} * 2);
-
-  @include up($bp-md) { width: calc(100% - #{$container-pad-tablet} * 2); }
-  @include up($bp-lg) { width: calc(100% - #{$container-pad-desktop} * 2); }
-}
 
 .inner {
   @include container;
@@ -36,6 +24,7 @@
   @include up($bp-md) {
     flex-direction: row;
     align-items: flex-start;
+    justify-content: center;
     gap: $space-9;
   }
 }
@@ -78,8 +67,8 @@
   align-items: center;
   padding: 3px 10px;
   border-radius: $radius-pill;
-  background: rgba(255, 210, 74, 0.16);
-  color: $color-accent-yellow;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
   font-size: 0.68rem;
   font-weight: $fw-bold;
   letter-spacing: 0.04em;
