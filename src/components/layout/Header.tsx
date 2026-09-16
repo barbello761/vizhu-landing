@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Logo } from '../ui/Logo';
 import { Button } from '../ui/Button';
 import styles from './Header.module.scss';
+import { APP_URL } from '../../data/app-link';
 
 // Nav per ТЗ — exactly four anchor blocks.
 const nav = [
@@ -10,8 +11,6 @@ const nav = [
   { href: '#team',     label: 'Команда проекта' },
   { href: '#contacts', label: 'Контакты' },
 ];
-
-const APP_URL = 'https://app.vizhu.su';
 
 export function Header() {
   const [open, setOpen] = useState(false);

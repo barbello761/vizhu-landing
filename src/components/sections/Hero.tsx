@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "../ui/Button";
 import styles from "./Hero.module.scss";
+import { APP_URL } from "../../data/app-link";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const APP_URL = "https://app.vizhu.su";
 
 export function Hero() {
   const reduced = useReducedMotion();
