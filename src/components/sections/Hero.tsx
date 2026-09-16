@@ -3,7 +3,7 @@ import { Button } from "../ui/Button";
 import styles from "./Hero.module.scss";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const APP_URL = "https://app.vizhu.su";
+const APP_URL = "https://demo.vizhu.su";
 
 export function Hero() {
   const reduced = useReducedMotion();
